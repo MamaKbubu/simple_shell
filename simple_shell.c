@@ -11,6 +11,34 @@ int main(void)
 	char *args[MAX_ARGS];
 	char line[MAX_LINE];
 	int should_run = 1;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+	while(should_run) {
+		printf("Kat_Tshego > ");
+		fflush(stdout);
+
+	/* read input*/
+	fgets(line, MAX_LINE, stdin);
+
+	/* tokenize input*/
+	args[0] = strtok(line, " \n");
+	int i = 0;
+
+	while(args[i] != NULL) 
+	{
+		args[++i] = strtok(NULL, " \n");
+        }
+
+
+	pid_t pid = fork();
+	if(pid == 0) {
+		execvp(args[0], args);
+		exit(1);
+=======
+	
+>>>>>>> fb60f8db526366c099d0f3116f408029d5cc0aa5
 	while (should_run)
 	{
 		printf("Kat_Tshego > ");
@@ -32,6 +60,7 @@ int main(void)
 		{
 			execvp(args[0], args);
 			exit(1);
+>>>>>>> 98e71d86f6207e80e43950574167e7045ea070ae
 	}
     }
 }
