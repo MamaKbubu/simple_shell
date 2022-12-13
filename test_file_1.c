@@ -1,4 +1,8 @@
 #include "main.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 int main(void)
 {
@@ -27,7 +31,7 @@ int main(void)
 		return (-1);
 	}
 
-	/* make copy of user typed command */
+	/*make copy of user typed command*/
 	strcpy(copy_command, full_command);
 
 	/* check state of getline function. Checks if
@@ -49,7 +53,7 @@ int main(void)
 		}
 		num_tokens++;
 
-		/* allocate space for pointer to argv */
+		/*allocate space for pointer to argv*/
 		argv = malloc(sizeof(char *) * num_tokens);
 
 		token = strtok(copy_command, delim);
