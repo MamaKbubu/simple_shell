@@ -11,7 +11,6 @@ int main(void)
 	char *args[MAX_ARGS];
 	char line[MAX_LINE];
 	int should_run = 1;
-	
 	while (should_run)
 	{
 		printf("Kat_Tshego > ");
@@ -25,7 +24,7 @@ int main(void)
 		while (args[i] != NULL)
 		{
 			args[++i] = strtok(NULL, " \n");
-        }
+		}
 		// run command //
 		pid_t pid = fork();
 		
