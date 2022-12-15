@@ -32,8 +32,8 @@ int main(void)
 	/*make copy of user typed command*/
 	strcpy(copy_command, full_command);
 
-	/* check state of getline function. Checks if
-	* function failed or reached EOF or user use CTRL + D */
+	/* check state of getline function. Checks if */
+	/* function failed or reached EOF or user use CTRL + D */
 	if (nchars_read == -1)
 	{
 		printf("Exiting Shell\n");
