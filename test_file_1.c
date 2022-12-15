@@ -15,9 +15,7 @@ int main(void)
 	int i = 0;
 	int num_tokens = 0;
 
-	/* print prompt for user */
-
-	printf("KatTshe >");
+	printf("KatTshe > ");
 
 	/* get user string and pass it to full_command */
 	nchars_read = getline(&full_command, &n, stdin);
