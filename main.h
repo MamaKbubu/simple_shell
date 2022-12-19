@@ -8,4 +8,6 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
+void execmd(char **argv);
+
 #endif
