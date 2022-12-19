@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 		strcpy(lineptr_copy, lineptr);
 
 		/* splits string into array */
-		token = strok(lineptr, delim);
+		token = strtok(lineptr, delim);
 
 		while (token != NULL)
 		{
@@ -75,6 +75,16 @@ int main(int argc, char **argv)
 	}
 	
 	free(lineptr);
-
-	return (0);
+	
+	int main(void)
+	{
+		int id = fork();
+		
+		if (id == 0)
+		{
+			printf(" Child ID: %d, parent ID: %d \n",
+				getpid(), getppid());
+		}
+		return (0);
+	}
 }
