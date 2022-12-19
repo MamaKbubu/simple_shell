@@ -12,13 +12,12 @@ int main(void)
 {
     char command[MAX_COMMAND_LEN];
     char *args[MAX_ARGS];
+    int i = 0;
 
     while (1) {
         printf("KaTshe>> ");
         fgets(command, MAX_COMMAND_LEN, stdin);
 
-        int i;
-	i = 0;
 
         args[i] = strtok(command, " \n");
 
@@ -35,7 +34,7 @@ int main(void)
         /* Check for cd */
         if (strcmp(args[0], "cd") == 0) {
             if (args[1] == NULL) {
-                // No second argument, go to home
+                /* No second argument, go to home */
                 char *home = getenv("HOME");
                 int status = chdir(home);
 
@@ -50,24 +49,24 @@ int main(void)
                 }
             }
         } else {
-            // Find command
+            /* Find command */
             char path[MAX_PATH_LEN];
             strcpy(path, "/bin/");
             strcat(path, args[0]);
 
-            // Check if command exists
+            /* Check if command exists */
             if (access(path, X_OK) != -1) {
                 int pid = fork();
 
                 if (pid == 0) {
-                    // Child process
+                    /* Child process */
                     execv(path, args);
                 } else {
-                    // Parent process
+                    /* Parent process */
                     waitpid(pid, NULL, 0);
                 }
             } else {
-                // Command does not exist
+                /* Command does not exist */
                 printf("Command not found!\n");
             }
         }
