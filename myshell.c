@@ -1,76 +1,66 @@
 #include <stdio.h>
 #include <string.h>
-#include <sys/wait.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
-#define MAX_ARGS 64
-#define MAX_COMMAND_LEN 1024
-#define MAX_PATH_LEN 1024
+#define MAX_LEN 1000
+#define MAX_ARGS 10
 
-int main(void)
-{
-    char command[MAX_COMMAND_LEN];
+/* function declarations */
+void parse_command(char *cmd_line, char **args);
+int execute_command(char **args);
+
+int main() {
+    char cmd_line[MAX_LEN];
     char *args[MAX_ARGS];
-    int i = 0;
 
     while (1) {
-        printf("KaTshe>> ");
-        fgets(command, MAX_COMMAND_LEN, stdin);
-
-
-        args[i] = strtok(command, " \n");
-
-        while (args[i] != NULL) {
-            ++i;
-            args[i] = strtok(NULL, " \n");
-        }
-
-        /* Check for exit */
-        if (strcmp(args[0], "exit") == 0) {
+        printf(">> ");
+        fgets(cmd_line, MAX_LEN, stdin);
+        parse_command(cmd_line, args);
+        if (execute_command(args) == -1)
             break;
-        }
-
-        /* Check for cd */
-        if (strcmp(args[0], "cd") == 0) {
-            if (args[1] == NULL) {
-                /* No second argument, go to home */
-                char *home = getenv("HOME");
-                int status = chdir(home);
-
-                if (status != 0) {
-                    printf("Error changing directory!\n");
-                }
-            } else {
-                int status = chdir(args[1]);
-
-                if (status != 0) {
-                    printf("Error changing directory!\n");
-                }
-            }
-        } else {
-            /* Find command */
-            char path[MAX_PATH_LEN];
-            strcpy(path, "/bin/");
-            strcat(path, args[0]);
-
-            /* Check if command exists */
-            if (access(path, X_OK) != -1) {
-                int pid = fork();
-
-                if (pid == 0) {
-                    /* Child process */
-                    execv(path, args);
-                } else {
-                    /* Parent process */
-                    waitpid(pid, NULL, 0);
-                }
-            } else {
-                /* Command does not exist */
-                printf("Command not found!\n");
-            }
-        }
     }
 
+    return 0;
+}
+
+void parse_command(char *cmd_line, char **args) {
+    int i = 0;
+    args[i] = strtok(cmd_line, " \n");
+    while (args[i] != NULL) {
+        args[++i] = strtok(NULL, " \n");
+    }
+}
+
+int execute_command(char **args) {
+    int status;
+
+    if (strcmp(args[0], "env") == 0) {
+        /* display environment */
+        char *env = getenv("PATH");
+        printf("PATH=%s\n", env);
+    } else if (strcmp(args[0], "exit") == 0) {
+        /* exit shell */
+        return -1;
+    } else {
+        /* execute command */
+        pid_t pid = fork();
+        if (pid < 0) {
+            printf("Fork failed\n");
+            return 1;
+        } else if (pid == 0) {
+            /* child process */
+            if (execvp(args[0], args) < 0) {
+                printf("Exec failed\n");
+            }
+            exit(0);
+        } else {
+            /* parent process */
+            while (wait(&status) != pid);
+        }
+    }
     return 0;
 }
