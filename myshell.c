@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stddef.h>
 
 #define BUFFERSIZE 256
 
@@ -152,8 +153,9 @@ int execute(char **args)
 //Handle the built-in commands
 int builtin_command(char **args)
 {
-    int status = 1; //Used to store the status code of the processes
-    
+    int status = 1;
+    char **env; //Used to store the status code of the processes
+
     //Check if the command is the exit built-in
     if (strcmp(args[0], "exit") == 0)
     {
@@ -163,12 +165,13 @@ int builtin_command(char **args)
         exit(EXIT_SUCCESS);
     }
     //Check if the command is the env built-in
-    else if (strcmp(args[0], "env") == 0)
+    else (strcmp(args[0], "env") == 0);
     {
         //If the command is the env built-in,
         //print the current environment
-        status = 0;
-        char **env = environ;
+        
+	status = 0;
+        char **env;
         while (*env)
         {
             printf("%s\n", *env);
