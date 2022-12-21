@@ -1,35 +1,33 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <string.h> 
 #include <stdlib.h> 
-#include <unistd.h> 
+#include <unistd.h>
 
 #define MAX_LEN 512
-
-/** main - simple unix command line intepreter
-  * @argc: command line argument count
-  * @argv: Command line argument array
-  * Return: 0 on SUCCESS
-  */
-
+/** main - simple unix command line inteprete
+ * @argc: command line argument count
+ * @argv: Command line argument array
+ * Return: 0 on SUCCESS
+ */
 int main(int argc, char *argv[]) 
 {
 	char command[MAX_LEN]; 
 	int interactive = 0; 
 	
-	if (argc == 1) { 
+	if (argc == 1) {
 		/* interactive mode */
-		interactive = 1; 
+		interactive = 1;
 		printf("Unix command interpreter \n"); 
-		printf("Type 'quit' to exit \n"); 
-	} 
+		printf("Type 'exit' to exit \n");
+	}
 
-	while (1) { 
-		if (interactive) { 
-			printf("$ "); 
-			fgets(command, MAX_LEN, stdin); 
-		} 
-		else { 
-			if (argc == 1) { 
+	while (1) {
+		if (interactive) {
+			printf("$ ");
+			fgets(command, MAX_LEN, stdin);
+		}
+		else {
+			if (argc == 1) {
 				break; 
 			} 
 			strcpy(command, argv[1]); 
