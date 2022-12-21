@@ -29,13 +29,14 @@ int main(int argc, char *argv[])
 		else {
 			if (argc == 1) {
 				break; 
-			} 
+			}
 			strcpy(command, argv[1]); 
-			for (int i = 2; i < argc; i++) { 
+			for (int i = 2; i < argc; i++)
+			{
 				strcat(command, " "); 
 				strcat(command, argv[i]); 
 			} 
-		} 
+		}
 
 		/* exit if user types 'quit' */
 		if (strcmp(command, "exit\n") == 0) { 
