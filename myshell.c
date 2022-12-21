@@ -36,21 +36,20 @@ int main(int argc, char *argv[])
 				strcat(command, " "); 
 				strcat(command, argv[i]); 
 			} 
+
+		/* exit if user types 'exit' */
+		if (strcmp(command,"Exiting...\n") == 0) {
+			printf("Exiting...\n");
+			break;
 		}
 
-		/* exit if user types 'quit' */
-		if (strcmp(command, "exit\n") == 0) { 
-			printf("Exiting...\n"); 
-			break; 
-		} 
-
 		/* execute command using system()  */
-		if (system(command) != 0) { 
-			printf("Error executing command\n"); 
+		if (system(command) != 0)
+		{	printf("Error executing command\n"); 
 		} 
 		if (!interactive) { 
 			break; 
-		} 
+		}
 	} 
 
 	return 0; 
